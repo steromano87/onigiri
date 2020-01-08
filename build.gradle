@@ -1,0 +1,48 @@
+plugins {
+    id 'java-library'
+}
+
+group 'com.github.steromano87'
+version '0.1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    // Selenium client
+    api group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+
+    // Appium client
+    api group: 'io.appium', name: 'java-client', version: '7.2.0'
+
+    // Javassist library for dynamic proxy creation
+    implementation group: 'org.javassist', name: 'javassist', version: '3.26.0-GA'
+
+    // Apache Commons Configuration
+    implementation group: 'org.apache.commons', name: 'commons-configuration2', version: '2.6'
+
+    // Apache Commons IO
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    // Log4j2
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.12.1'
+
+    // Reflections
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.11'
+
+    // For URL building
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+
+    // JUnit 5 platform for testing
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.2'
+}

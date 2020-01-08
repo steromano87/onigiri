@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <system/>
+    <properties fileName="onigiri.properties" config-name="user-override" config-optional="true"
+                config-forceCreate="true"/>
+    <properties fileName="onigiri-defaults.properties"/>
+</configuration>
