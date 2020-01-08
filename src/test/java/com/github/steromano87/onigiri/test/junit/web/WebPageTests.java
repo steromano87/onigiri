@@ -14,8 +14,14 @@ class WebPageTests {
 
     @BeforeEach
     void beforeHook() {
-        this.driver = new ChromeDriver(new ChromeOptions());
-        this.builder = new PageBuilder(this.driver);
+        try {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("headless");
+            this.driver = new ChromeDriver(options);
+            this.builder = new PageBuilder(this.driver);
+        } catch (IllegalStateException exc) {
+            Assumptions.assumeTrue(false);
+        }
     }
 
     @AfterEach
