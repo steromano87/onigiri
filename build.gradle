@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 group 'com.github.steromano87'
@@ -75,4 +76,37 @@ dependencies {
     testImplementation group: 'org.testcontainers', name: 'selenium', version: '1.12.4'
     testImplementation group: 'org.testcontainers', name: 'junit-jupiter', version: '1.12.4'
     testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
+}
+
+publishing {
+    publications {
+        onigiri(MavenPublication) {
+            pom {
+                name = 'onigiri'
+                description = 'Page Object Model framework for modern websites and native apps'
+                url = ''
+
+                licenses {
+                    license {
+                        name = 'GNU General Public License, Version 3'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'steromano87'
+                        name = 'Stefano Romanò'
+                        email = 'rumix87@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/steromano87/onigiri.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:steromano87/onigiri.git'
+                    url = 'https://github.com/steromano87/onigiri'
+                }
+            }
+        }
+    }
 }
