@@ -1,34 +1,10 @@
 package com.github.steromano87.onigiri.test.junit.web;
 
 import com.github.steromano87.onigiri.test.pages.*;
-import com.github.steromano87.onigiri.factory.PageBuilder;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 
-class WebPageTests {
-    private WebDriver driver;
-    private PageBuilder builder;
-
-    @BeforeEach
-    void beforeHook() {
-        try {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("headless");
-            this.driver = new ChromeDriver(options);
-            this.builder = new PageBuilder(this.driver);
-        } catch (IllegalStateException exc) {
-            Assumptions.assumeTrue(false);
-        }
-    }
-
-    @AfterEach
-    void afterHook() {
-        this.driver.quit();
-    }
-
+class WebPageTests extends BaseWebTest {
     @Test
     @DisplayName("Simple Web Page")
     void simpleWebPageTest() {
@@ -86,33 +62,5 @@ class WebPageTests {
                 "Second container - Second paragraph",
                 page.getSections().get(1).getSecondItem()
         );
-    }
-
-    @Test
-    @DisplayName("Page with a framed element (one frame)")
-    void pageWithSingleFrameTest() {
-        PageWithSingleFrame page = this.builder.build(PageWithSingleFrame.class);
-        page.visit();
-
-        Assertions.assertEquals("This is the main body", page.getFramedContent());
-    }
-
-    @Test
-    @DisplayName("Page with a framed element (two nested frames)")
-    void pageWithDoubleFrameTest() {
-        PageWithDoubleFrame page = this.builder.build(PageWithDoubleFrame.class);
-        page.visit();
-
-        Assertions.assertEquals("This is the main body", page.getFramedContent());
-    }
-
-    @Test
-    @DisplayName("Page with a framed section (one frame)")
-    void pageWithSingleFrameSectionedTest() {
-        PageWithSingleFrameSectioned page = this.builder.build(PageWithSingleFrameSectioned.class);
-        page.visit();
-
-        Assertions.assertEquals("This is the main body", page.getFramedContent());
-        Assertions.assertEquals("This is the main body", page.getFramedSection().getFramedContent());
     }
 }
