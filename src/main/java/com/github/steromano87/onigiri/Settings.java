@@ -22,6 +22,9 @@ public class Settings {
     public static final String ELEMENT_LOCATOR_TIMEOUT = "onigiri.element.locator.timeout";
     public static final String ELEMENT_LOCATOR_FORCE_EXTENDED = "onigiri.element.locator.force.extended";
 
+    // Page properties
+    public static final String PAGE_BASE_URL = "onigiri.page.baseurl";
+
     private static Configuration configuration;
 
     static {
