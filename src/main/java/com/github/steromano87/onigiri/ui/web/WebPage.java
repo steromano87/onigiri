@@ -1,5 +1,6 @@
 package com.github.steromano87.onigiri.ui.web;
 
+import com.github.steromano87.onigiri.Settings;
 import com.github.steromano87.onigiri.handlers.BrowserHandler;
 import com.github.steromano87.onigiri.handlers.JavascriptHandler;
 import com.github.steromano87.onigiri.ui.AbstractPage;
@@ -56,6 +57,11 @@ public abstract class WebPage extends AbstractPage implements Page, Visitable, H
 
         String navigationUrl = Proxies.getUnproxiedClass(this).getAnnotation(PageUrl.class).value();
         UrlParameter[] defaultParameters = Proxies.getUnproxiedClass(this).getAnnotation(PageUrl.class).parameters();
+
+        // Get the base URL from properties if the navigation URL starts with a slash
+        if (navigationUrl.startsWith("/")) {
+            navigationUrl = Settings.getInstance().getString(Settings.PAGE_BASE_URL) + navigationUrl;
+        }
 
         // Build the final URL adding the page parameters
         try {
