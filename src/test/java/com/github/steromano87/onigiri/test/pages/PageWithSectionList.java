@@ -1,6 +1,7 @@
 package com.github.steromano87.onigiri.test.pages;
 
 import com.github.steromano87.onigiri.ui.web.NavigationException;
+import com.github.steromano87.onigiri.ui.web.PageUrl;
 import com.github.steromano87.onigiri.ui.web.WebSection;
 import com.github.steromano87.onigiri.ui.web.WebPage;
 import org.openqa.selenium.WebElement;
@@ -10,19 +11,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
+@PageUrl("/testpages/PageWithSectionList.html")
 public class PageWithSectionList extends WebPage {
     @FindBy(css = ".container")
     private List<PageSection> sections;
 
     public List<PageSection> getSections() {
         return this.sections;
-    }
-
-    @Override
-    public void visit() throws NavigationException {
-        URL pageURL = Objects.requireNonNull(this.getClass().getClassLoader()
-                .getResource("testpages/PageWithSectionList.html"));
-        this.getBrowserHandler().visit(pageURL);
     }
 
 

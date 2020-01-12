@@ -1,14 +1,13 @@
 package com.github.steromano87.onigiri.test.pages;
 
+import com.github.steromano87.onigiri.ui.web.PageUrl;
 import com.github.steromano87.onigiri.ui.web.WebPage;
 import com.github.steromano87.onigiri.ui.web.WebSection;
-import com.github.steromano87.onigiri.ui.web.NavigationException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.net.URL;
-import java.util.Objects;
 
+@PageUrl("/testpages/PageWithSection.html")
 public class PageWithSection extends WebPage {
     @FindBy(css = "#container")
     private PageSection section;
@@ -23,13 +22,6 @@ public class PageWithSection extends WebPage {
 
     public String getSecondItem() {
         return this.section.getSecondItem();
-    }
-
-    @Override
-    public void visit() throws NavigationException {
-        URL pageURL = Objects.requireNonNull(this.getClass().getClassLoader()
-                .getResource("testpages/PageWithSection.html"));
-        this.getBrowserHandler().visit(pageURL);
     }
 
 
