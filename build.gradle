@@ -15,6 +15,18 @@ test {
     useJUnitPlatform()
 }
 
+javadoc {
+    options {
+        encoding = 'UTF-8'
+        source = 8
+        links += [
+                'https://docs.oracle.com/javase/8/docs/api/',
+                'https://seleniumhq.github.io/selenium/docs/api/java/',
+                'https://www.javassist.org/html/'
+        ]
+    }
+}
+
 dependencies {
     // Selenium client
     api group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
