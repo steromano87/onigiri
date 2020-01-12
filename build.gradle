@@ -81,8 +81,11 @@ dependencies {
 publishing {
     publications {
         onigiri(MavenPublication) {
+            artifactId = 'onigiri'
+            from components.java
+
             pom {
-                name = 'onigiri'
+                name = 'Onigiri'
                 description = 'Page Object Model framework for modern websites and native apps'
                 url = ''
 
