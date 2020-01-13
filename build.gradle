@@ -36,7 +36,8 @@ javadoc {
         links += [
                 'https://docs.oracle.com/javase/8/docs/api/',
                 'https://seleniumhq.github.io/selenium/docs/api/java/',
-                'https://www.javassist.org/html/'
+                'https://www.javassist.org/html/',
+                'https://commons.apache.org/proper/commons-configuration/apidocs/'
         ]
     }
 }
