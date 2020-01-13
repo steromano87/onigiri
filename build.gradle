@@ -57,11 +57,8 @@ dependencies {
     // Apache Commons IO
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
-    // Log4j2
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.12.1'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.12.1'
+    // Logging
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
     // Reflections
     implementation group: 'org.reflections', name: 'reflections', version: '0.9.11'
@@ -71,6 +68,9 @@ dependencies {
 
     // JUnit 5 platform for testing
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.2'
+
+    // Log4j2 SLF4J biding for test only
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.0'
 
     // TestContainers for Selenium tests (with Remote Web Driver)
     testImplementation group: 'org.testcontainers', name: 'selenium', version: '1.12.4'

@@ -7,9 +7,8 @@ import com.github.steromano87.onigiri.enhancers.BeforeMethodEnhancer;
 import com.github.steromano87.onigiri.enhancers.BeforeMethodPriority;
 import com.github.steromano87.onigiri.ui.Page;
 import com.github.steromano87.onigiri.ui.Section;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -20,8 +19,7 @@ import java.time.Instant;
 public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhancer {
     private Instant startTime;
     private String stopwatchName;
-    private static Logger logger = LogManager.getLogger(StopwatchEnhancer.class);
-    private static final Level STOPWATCH = Level.forName("STOPWATCH", 380);
+    private static Logger logger = LoggerFactory.getLogger(StopwatchEnhancer.class);
 
     @Override
     public boolean isApplicableBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
@@ -60,6 +58,6 @@ public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhan
     }
 
     private void logStopwatchDuration(String stopwatchName, long stopwatchDuration) {
-        logger.log(STOPWATCH, String.format("%s - lasted %d ms", stopwatchName, stopwatchDuration));
+        logger.info(String.format("%s - lasted %d ms", stopwatchName, stopwatchDuration));
     }
 }

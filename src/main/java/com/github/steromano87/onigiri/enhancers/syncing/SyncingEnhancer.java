@@ -6,13 +6,13 @@ import com.github.steromano87.onigiri.enhancers.BeforeMethodPriority;
 import com.github.steromano87.onigiri.factory.OnigiriByBuilder;
 import com.github.steromano87.onigiri.ui.web.HoldsTabHandleReference;
 import com.github.steromano87.onigiri.utils.Proxies;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WrapsDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -29,7 +29,7 @@ public class SyncingEnhancer implements BeforeMethodEnhancer {
     private Map<RequiredForSync, Function<Void, Void>> syncConditions = new TreeMap<>(
             Comparator.comparingInt(RequiredForSync::priority)
     );
-    private static Logger logger = LogManager.getLogger(SyncingEnhancer.class);
+    private static Logger logger = LoggerFactory.getLogger(SyncingEnhancer.class);
 
     @Override
     public boolean isApplicableBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
