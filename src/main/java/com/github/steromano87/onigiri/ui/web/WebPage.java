@@ -77,6 +77,7 @@ public abstract class WebPage extends AbstractPage implements Page, Visitable, H
             throw new NavigationException("Invalid navigation URL: " + navigationUrl, exc);
         }
 
+        this.getLogger().info("Navigating to {}", navigationUrl);
         this.getBrowserHandler().visit(navigationUrl);
     }
 
