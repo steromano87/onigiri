@@ -7,6 +7,7 @@ import com.github.steromano87.onigiri.enhancers.BeforeMethodEnhancer;
 import com.github.steromano87.onigiri.enhancers.BeforeMethodPriority;
 import com.github.steromano87.onigiri.ui.Page;
 import com.github.steromano87.onigiri.ui.Section;
+import com.github.steromano87.onigiri.utils.Proxies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhan
         if (this.stopwatchName.equals("")) {
             this.stopwatchName = String.format(
                     "Method invocation %s.%s()",
-                    this.getVanillaClassName(target.getClass()),
+                    Proxies.getUnproxiedClass(target),
                     originalMethod.getName()
             );
         }
