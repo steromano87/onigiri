@@ -21,10 +21,10 @@ test {
     useJUnitPlatform()
 
     if (project.hasProperty("dockerized")) {
-        systemProperty "onigiri.page.baseurl", "file://"
+        systemProperty "onigiri.page.web.baseurl", "file://"
         systemProperty "dockerized", "1"
     } else {
-        systemProperty "onigiri.page.baseurl", "file://" + project.file("src/test/resources").absolutePath
+        systemProperty "onigiri.page.web.baseurl", "file://" + project.file("src/test/resources").absolutePath
         systemProperty "dockerized", "0"
     }
 }
