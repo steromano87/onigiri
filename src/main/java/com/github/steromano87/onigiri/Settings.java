@@ -23,7 +23,15 @@ public class Settings {
     public static final String ELEMENT_LOCATOR_FORCE_EXTENDED = "onigiri.element.locator.force.extended";
 
     // Page properties
-    public static final String PAGE_BASE_URL = "onigiri.page.baseurl";
+    /**
+     * Web page base (or host) URL.
+     * <p>
+     * If a {@link com.github.steromano87.onigiri.ui.web.WebPage} is annotated with a
+     * {@link com.github.steromano87.onigiri.ui.web.PageUrl} and the provided URL starts with a slash (/),
+     * then the URL is considered dynamic and will be evaluated using the URL defined in this property
+     * as host URL.
+     */
+    public static final String PAGE_BASE_URL = "onigiri.page.web.baseurl";
 
     private static Configuration configuration;
 
@@ -43,6 +51,16 @@ public class Settings {
         }
     }
 
+    /**
+     * Private constructor
+     */
+    private Settings() {}
+
+    /**
+     * Retrieves the singleton instance of Onigiri configuration.
+     *
+     * @return the global instance of Onigiri configuration
+     */
     public static Configuration getInstance() {
         return configuration;
     }
