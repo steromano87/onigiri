@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'jacoco'
 }
 
 group 'io.github.steromano87'
@@ -28,6 +29,15 @@ test {
         systemProperty "dockerized", "0"
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+// Add jacocoTestReport task after test to generate test coverage report
+test.finalizedBy(jacocoTestReport)
 
 javadoc {
     options {
