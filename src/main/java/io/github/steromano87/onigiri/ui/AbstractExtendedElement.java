@@ -4,10 +4,17 @@ import org.openqa.selenium.*;
 
 import java.util.List;
 
+/**
+ * Abstract base implementation of {@link ExtendedElement}.
+ * <p>
+ * This abstract class simply defines all the standard {@link WebElement} methods in a common place.
+ * <p>
+ * All the methods that are specific to the web or mobile part are defined in the
+ * related subclasses.
+ */
 public abstract class AbstractExtendedElement implements ExtendedElement {
+    // The wrapped element
     private WebElement wrappedElement;
-
-    public AbstractExtendedElement() {}
 
     @Override
     public void click() {
