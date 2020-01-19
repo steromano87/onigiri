@@ -31,7 +31,7 @@ public class EnhancersApplier implements MethodHandler {
         // Get all subclasses of Enhancer interface
         enhancerClasses = new Reflections(
             new ConfigurationBuilder()
-                    .setUrls(ClasspathHelper.forJavaClassPath())
+                    .setUrls(ClasspathHelper.forClassLoader())
                     .setScanners(new SubTypesScanner())
         ).getSubTypesOf(Enhancer.class).stream()
                 .filter(e -> !Modifier.isAbstract(e.getModifiers()))
