@@ -19,6 +19,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Class used to fetch and apply the available enhancers to an instance of a
+ * {@link io.github.steromano87.onigiri.ui.Page} or a {@link io.github.steromano87.onigiri.ui.Section}.
+ * <p>
+ * This class (that leverages Javassist's {@link MethodHandler}) scans the current context to
+ * instantiate one instance of each available enhancer. Each instance wil be bound to a particular
+ * {@link io.github.steromano87.onigiri.ui.Page} instance, so subsequent calls to an enhancer
+ * can use previously saved data.
+ *
+ * @see MethodHandler
+ */
 public class EnhancersApplier implements MethodHandler {
     private List<Enhancer> beforeMethodEnhancers;
     private List<Enhancer> afterMethodEnhancers;
@@ -38,6 +49,9 @@ public class EnhancersApplier implements MethodHandler {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Standard constructor
+     */
     public EnhancersApplier() {
         // Create all the enhancer instances
         Set<Enhancer> enhancers = new HashSet<>();
@@ -79,6 +93,15 @@ public class EnhancersApplier implements MethodHandler {
         return output;
     }
 
+    /**
+     * Applies all the available instances of {@link BeforeMethodEnhancer}
+     *
+     * @param target the target class for enhancer invocation
+     * @param originalMethod the original method
+     * @param overriddenMethod the Javassist overridden method
+     * @param args the method arguments
+     * @throws Throwable if the method invocation throws a generic exception or error
+     */
     private void applyBeforeMethodEnhancers(Object target, Method originalMethod, Method overriddenMethod, Object... args) throws Throwable {
         for (Enhancer enhancer : this.beforeMethodEnhancers) {
             BeforeMethodEnhancer beforeMethodEnhancer = (BeforeMethodEnhancer) enhancer;
@@ -95,6 +118,15 @@ public class EnhancersApplier implements MethodHandler {
         }
     }
 
+    /**
+     * Applies all the available instances of {@link AfterMethodEnhancer}
+     *
+     * @param target the target class for enhancer invocation
+     * @param originalMethod the original method
+     * @param overriddenMethod the Javassist overridden method
+     * @param args the method arguments
+     * @throws Throwable if the method invocation throws a generic exception or error
+     */
     private void applyAfterMethodEnhancers(Object target, Method originalMethod, Method overriddenMethod, Object... args) throws Throwable {
         for (Enhancer enhancer : afterMethodEnhancers) {
             AfterMethodEnhancer afterMethodEnhancer = (AfterMethodEnhancer) enhancer;
@@ -111,6 +143,12 @@ public class EnhancersApplier implements MethodHandler {
         }
     }
 
+    /**
+     * Retrieves the overridden (or default) priority for a {@link BeforeMethodEnhancer}.
+     *
+     * @param target the enhancer to be scanned
+     * @return the enhancer priority
+     */
     private int getBeforeMethodPriority(AnnotatedElement target) {
         if (target.isAnnotationPresent(BeforeMethodPriority.class)) {
             return target.getAnnotation(BeforeMethodPriority.class).value();
@@ -119,6 +157,12 @@ public class EnhancersApplier implements MethodHandler {
         }
     }
 
+    /**
+     * Retrieves the overridden (or default) priority for an {@link AfterMethodEnhancer}.
+     *
+     * @param target the enhancer to be scanned
+     * @return the enhancer priority
+     */
     private int getAfterMethodPriority(AnnotatedElement target) {
         if (target.isAnnotationPresent(AfterMethodPriority.class)) {
             return target.getAnnotation(AfterMethodPriority.class).value();
