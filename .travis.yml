@@ -22,4 +22,4 @@ script:
   - ./gradlew check -Pdockerized
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
