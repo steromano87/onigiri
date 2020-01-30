@@ -29,22 +29,7 @@ public class ElementClassSelector {
         // Type erasure in Java isn't complete. Attempt to discover the generic
         // type of the list.
         if (List.class.isAssignableFrom(element.getType())) {
-            Type genericType = element.getGenericType();
-            if (!(genericType instanceof ParameterizedType)) {
-                return null;
-            }
-
-            Type listType = ((ParameterizedType) genericType).getActualTypeArguments()[0];
-
-            // If the inner element is derived from an Extended element, use the inner list class
-            if (ExtendedElement.class.isAssignableFrom((Class<?>) listType)) {
-                return (Class<? extends ExtendedElement>) listType;
-            }
-
-            // If the list parametrized type is not an instance of WebElement, return null
-            if (!WebElement.class.equals(listType)) {
-                return null;
-            }
+            return this.getElementClassFromList(element);
         }
 
         // If the desired class is a simple class, return it directly
@@ -54,5 +39,27 @@ public class ElementClassSelector {
 
         // TODO: extend the logic of the method determination (instead of relying on the declared class only)
         return (Class<? extends ExtendedElement>) element.getType();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<? extends WebElement> getElementClassFromList(Field element) {
+        Type genericType = element.getGenericType();
+        if (!(genericType instanceof ParameterizedType)) {
+            return null;
+        }
+
+        Type listType = ((ParameterizedType) genericType).getActualTypeArguments()[0];
+
+        // If the inner element is derived from an Extended element, use the inner list class
+        if (ExtendedElement.class.isAssignableFrom((Class<?>) listType)) {
+            return (Class<? extends ExtendedElement>) listType;
+        }
+
+        // If the list parametrized type is not an instance of WebElement, return null
+        if (!WebElement.class.equals(listType)) {
+            return null;
+        }
+
+        return ElementMap.getElementClass(this.platform.toString(), this.automation);
     }
 }
