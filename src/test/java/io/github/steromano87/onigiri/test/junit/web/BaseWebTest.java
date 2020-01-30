@@ -1,12 +1,14 @@
 package io.github.steromano87.onigiri.test.junit.web;
 
 import io.github.steromano87.onigiri.factory.PageBuilder;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
@@ -21,6 +23,10 @@ public abstract class BaseWebTest {
 
     @BeforeAll
     static void beforeAll() {
+        // Install SLF4J JUL bridge
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+
         if (System.getProperty("dockerized").equals("1")) {
             container = new BrowserWebDriverContainer<>()
                     .withCapabilities(new ChromeOptions())

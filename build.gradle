@@ -82,6 +82,8 @@ dependencies {
 
     // Log4j2 SLF4J biding for test only
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.0'
+    testImplementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
+
 
     // TestContainers for Selenium tests (with Remote Web Driver)
     testImplementation group: 'org.testcontainers', name: 'selenium', version: '1.12.4'
