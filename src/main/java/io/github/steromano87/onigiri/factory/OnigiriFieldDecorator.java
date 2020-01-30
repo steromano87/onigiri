@@ -70,7 +70,7 @@ public class OnigiriFieldDecorator implements FieldDecorator {
         // If the element is a list of Sections, use the ad-hoc method
         if (List.class.isAssignableFrom(field.getType())
                 && Section.class.isAssignableFrom(
-                (Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0])) {
+                (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0])) {
             return this.decorateSectionList(locator);
         }
 
