@@ -58,31 +58,15 @@ public class EnhancersApplier implements MethodHandler {
         for (Class<? extends Enhancer> enhancerClass : enhancerClasses) {
             try {
                 enhancers.add(enhancerClass.getConstructor().newInstance());
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException exc) {
-                logger.warn(String.format("Enhancer %s could not be instantiated, skipping...", enhancerClass.getName()));
+            } catch (NoSuchMethodException | InstantiationException |
+                    IllegalAccessException | InvocationTargetException exc) {
+                logger.warn("Enhancer {} could not be instantiated, skipping...", enhancerClass.getName());
             }
         }
 
         // Split before and after enhancers in their respective lists
-        this.beforeMethodEnhancers = enhancers.stream()
-                .filter(e -> BeforeMethodEnhancer.class.isAssignableFrom(e.getClass()))
-                .sorted(Comparator.comparingInt(e -> this.getBeforeMethodPriority(e.getClass())))
-                .collect(Collectors.toList());
-        logger.debug("The following BeforeMethod enhancers have been detected: " +
-                this.beforeMethodEnhancers.stream()
-                        .map(e -> e.getClass().getName())
-                        .collect(Collectors.joining(", "))
-        );
-
-        this.afterMethodEnhancers = enhancers.stream()
-                .filter(e -> AfterMethodEnhancer.class.isAssignableFrom(e.getClass()))
-                .sorted(Comparator.comparingInt(e -> this.getAfterMethodPriority(e.getClass())))
-                .collect(Collectors.toList());
-        logger.debug("The following AfterMethod enhancers have been detected: " +
-                this.afterMethodEnhancers.stream()
-                        .map(e -> e.getClass().getName())
-                        .collect(Collectors.joining(", "))
-        );
+        this.beforeMethodEnhancers = this.filterAndSortEnhancers(enhancers, BeforeMethodEnhancer.class);
+        this.afterMethodEnhancers = this.filterAndSortEnhancers(enhancers, AfterMethodEnhancer.class);
     }
 
     @Override
@@ -102,16 +86,16 @@ public class EnhancersApplier implements MethodHandler {
      * @param args the method arguments
      * @throws Throwable if the method invocation throws a generic exception or error
      */
-    private void applyBeforeMethodEnhancers(Object target, Method originalMethod, Method overriddenMethod, Object... args) throws Throwable {
+    private void applyBeforeMethodEnhancers(Object target, Method originalMethod,
+                                            Method overriddenMethod, Object... args) throws Throwable {
         for (Enhancer enhancer : this.beforeMethodEnhancers) {
             BeforeMethodEnhancer beforeMethodEnhancer = (BeforeMethodEnhancer) enhancer;
             if (beforeMethodEnhancer.isApplicableBefore(target, originalMethod, overriddenMethod, args)) {
                 logger.debug(
-                        String.format(
-                                "Applying %s enhancer before method %s.%s",
-                                beforeMethodEnhancer.getClass().getName(),
-                                Proxies.getUnproxiedClass(target).getName(),
-                                originalMethod.getName())
+                        "Applying {} enhancer before method {}.{}",
+                        beforeMethodEnhancer.getClass().getName(),
+                        Proxies.getUnproxiedClass(target).getName(),
+                        originalMethod.getName()
                 );
                 beforeMethodEnhancer.applyBefore(target, originalMethod, overriddenMethod, args);
             }
@@ -127,16 +111,16 @@ public class EnhancersApplier implements MethodHandler {
      * @param args the method arguments
      * @throws Throwable if the method invocation throws a generic exception or error
      */
-    private void applyAfterMethodEnhancers(Object target, Method originalMethod, Method overriddenMethod, Object... args) throws Throwable {
+    private void applyAfterMethodEnhancers(Object target, Method originalMethod,
+                                           Method overriddenMethod, Object... args) throws Throwable {
         for (Enhancer enhancer : afterMethodEnhancers) {
             AfterMethodEnhancer afterMethodEnhancer = (AfterMethodEnhancer) enhancer;
             if (afterMethodEnhancer.isApplicableAfter(target, originalMethod, overriddenMethod, args)) {
                 logger.debug(
-                        String.format(
-                                "Applying %s enhancer after method %s.%s",
-                                afterMethodEnhancer.getClass().getName(),
-                                Proxies.getUnproxiedClass(target).getName(),
-                                originalMethod.getName())
+                        "Applying {} enhancer after method {}.{}",
+                        afterMethodEnhancer.getClass().getName(),
+                        Proxies.getUnproxiedClass(target).getName(),
+                        originalMethod.getName()
                 );
                 afterMethodEnhancer.applyAfter(target, originalMethod, overriddenMethod, args);
             }
@@ -169,5 +153,35 @@ public class EnhancersApplier implements MethodHandler {
         } else {
             return 100;
         }
+    }
+
+    /**
+     * Filters and sorts {@link AfterMethodEnhancer}s from {@link BeforeMethodEnhancer}s, using the declared
+     * {@link AfterMethodPriority} or {@link BeforeMethodPriority} respectively.
+     *
+     * @param availableEnhancers the list of all instances of available enhancers
+     * @param enhancerBaseInterface the {@link Enhancer} interface that should be scanned for filtering
+     * @return the ordered and filtered list of specific enhancers
+     */
+    private List<Enhancer> filterAndSortEnhancers(
+            Set<Enhancer> availableEnhancers,
+            Class<? extends Enhancer> enhancerBaseInterface) {
+        List<Enhancer> output = availableEnhancers.stream()
+                .filter(e -> enhancerBaseInterface.isAssignableFrom(e.getClass()))
+                .sorted(Comparator.comparingInt(
+                        e -> enhancerBaseInterface.equals(BeforeMethodEnhancer.class) ?
+                                this.getBeforeMethodPriority(e.getClass()) :
+                                this.getAfterMethodPriority(e.getClass())))
+                .collect(Collectors.toList());
+
+        logger.debug(
+                "The following instances of {} class have been detected: {}",
+                enhancerBaseInterface.getSimpleName(),
+                output.stream()
+                        .map(e -> e.getClass().getName())
+                        .collect(Collectors.joining(", "))
+        );
+
+        return output;
     }
 }
