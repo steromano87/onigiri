@@ -22,5 +22,7 @@ script:
   - ./gradlew check -Pdockerized
 
 after_script:
-  - JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage --input-type jacoco build/reports/jacoco/test/jacocoTestReport.xml
+  - export JACOCO_SOURCE_PATH=src/main/java
+  - export CC_TEST_REPORTER_ID=6251641354bb1574bd4619f8c2ad23ffc5eda9043a52750d7f5f05d0cc3034a0
+  - ./cc-test-reporter format-coverage --input-type jacoco build/reports/jacoco/test/jacocoTestReport.xml
   - ./cc-test-reporter upload-coverage
