@@ -121,7 +121,7 @@ public class OnigiriElementLocator implements CacheableLocator {
 
     private WebElement castToProperElementClass(WebElement rawElement) {
         WebElement outputElement;
-        if (ExtendedElement.class.isAssignableFrom(this.elementType) |
+        if (ExtendedElement.class.isAssignableFrom(this.elementType) ||
                 Settings.getInstance().getBoolean(Settings.ELEMENT_LOCATOR_FORCE_EXTENDED)) {
             try {
                 outputElement = this.elementType
