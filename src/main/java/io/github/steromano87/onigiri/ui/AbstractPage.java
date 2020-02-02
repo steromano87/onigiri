@@ -38,14 +38,14 @@ public abstract class AbstractPage implements Page {
     protected WebDriverWait getWaiter() {
         return this.getWaiter(
                 this.getDefaultSyncTimeout(),
-                Settings.getInstance().getInt(Settings.SYNC_POLLING_INTERVAL)
+                Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING)
         );
     }
 
     protected WebDriverWait getWaiter(int waitTimeout) {
         return this.getWaiter(
                 waitTimeout,
-                Settings.getInstance().getInt(Settings.SYNC_POLLING_INTERVAL)
+                Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING)
         );
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractPage implements Page {
                     this.getClass().getAnnotation(SyncTimeout.class).unit()
             ).get(ChronoUnit.SECONDS);
         } else {
-            return Settings.getInstance().getInt(Settings.SYNC_WAIT_TIMEOUT);
+            return Settings.getInstance().getInt(Settings.SYNC_DEFAULT_TIMEOUT);
         }
     }
 }

@@ -53,17 +53,17 @@ public class Settings {
      * page is always loaded before performing an action, but the execution speed wil be lower due to
      * the repeated evaluations.
      */
-    public static final String SYNC_CACHE_ENABLED = "onigiri.sync.cache.enabled";
+    public static final String SYNC_CACHED = "onigiri.sync.cached";
 
     /**
      * The default timeout for sync.
      */
-    public static final String SYNC_WAIT_TIMEOUT = "onigiri.sync.wait.timeout";
+    public static final String SYNC_DEFAULT_TIMEOUT = "onigiri.sync.default.timeout";
 
     /**
      * The default polling interval between two consecutive page sync evaluations.
      */
-    public static final String SYNC_POLLING_INTERVAL = "onigiri.sync.polling.interval";
+    public static final String SYNC_DEFAULT_POLLING = "onigiri.sync.default.polling";
 
     // Stopwatch properties
     /**
@@ -87,7 +87,7 @@ public class Settings {
      * is recalculated. This ensures that the requested element is always "fresh", but the execution speed
      * may be sensibly reduced.
      */
-    public static final String ELEMENT_LOCATORS_CACHE_ENABLED = "onigiri.element.locator.cache.enabled";
+    public static final String ELEMENT_LOCATOR_CACHED = "onigiri.element.locator.cached";
 
     /**
      * Default element locator timeout.
@@ -103,7 +103,7 @@ public class Settings {
      * {@link ExtendedElement}. Elements already declared as
      * {@link ExtendedElement} will not be affected.
      */
-    public static final String ELEMENT_LOCATOR_FORCE_EXTENDED = "onigiri.element.locator.force.extended";
+    public static final String ELEMENT_FORCE_EXTENDED = "onigiri.element.forceextended";
 
     // Page properties
     /**
@@ -114,7 +114,7 @@ public class Settings {
      * then the URL is considered dynamic and will be evaluated using the URL defined in this property
      * as host URL.
      */
-    public static final String PAGE_BASE_URL = "onigiri.page.web.baseurl";
+    public static final String PAGE_WEB_BASEURL = "onigiri.page.web.baseurl";
 
     private static Configuration configuration;
 
