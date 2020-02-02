@@ -1,8 +1,8 @@
 package io.github.steromano87.onigiri.ui.web;
 
 import io.github.steromano87.onigiri.Settings;
-import io.github.steromano87.onigiri.handlers.BrowserHandler;
-import io.github.steromano87.onigiri.handlers.JavascriptHandler;
+import io.github.steromano87.onigiri.handlers.web.BrowserHandler;
+import io.github.steromano87.onigiri.handlers.web.JavascriptHandler;
 import io.github.steromano87.onigiri.ui.AbstractPage;
 import io.github.steromano87.onigiri.ui.Page;
 import io.github.steromano87.onigiri.utils.Proxies;

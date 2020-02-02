@@ -1,5 +1,7 @@
-package io.github.steromano87.onigiri.handlers;
+package io.github.steromano87.onigiri.handlers.web;
 
+import io.github.steromano87.onigiri.handlers.HandlesViewport;
+import io.github.steromano87.onigiri.handlers.HasPlatformInformation;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.openqa.selenium.*;
