@@ -1,4 +1,4 @@
-package io.github.steromano87.onigiri.handlers;
+package io.github.steromano87.onigiri.handlers.web;
 
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.JavascriptExecutor;
