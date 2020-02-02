@@ -13,45 +13,6 @@ repositories {
     mavenCentral()
 }
 
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-}
-
-test {
-    useJUnitPlatform()
-
-    if (project.hasProperty("dockerized")) {
-        systemProperty "onigiri.page.web.baseurl", "file://"
-        systemProperty "dockerized", "1"
-    } else {
-        systemProperty "onigiri.page.web.baseurl", "file://" + project.file("src/test/resources").absolutePath
-        systemProperty "dockerized", "0"
-    }
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-}
-
-// Add jacocoTestReport task after test to generate test coverage report
-test.finalizedBy(jacocoTestReport)
-
-javadoc {
-    options {
-        encoding = 'UTF-8'
-        source = 8
-        links += [
-                'https://docs.oracle.com/javase/8/docs/api/',
-                'https://seleniumhq.github.io/selenium/docs/api/java/',
-                'https://www.javassist.org/html/',
-                'https://commons.apache.org/proper/commons-configuration/apidocs/'
-        ]
-    }
-}
-
 dependencies {
     // Selenium client
     api group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
@@ -89,6 +50,45 @@ dependencies {
     testImplementation group: 'org.testcontainers', name: 'selenium', version: '1.12.4'
     testImplementation group: 'org.testcontainers', name: 'junit-jupiter', version: '1.12.4'
     testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+test {
+    useJUnitPlatform()
+
+    if (project.hasProperty("dockerized")) {
+        systemProperty "onigiri.page.web.baseurl", "file://"
+        systemProperty "dockerized", "1"
+    } else {
+        systemProperty "onigiri.page.web.baseurl", "file://" + project.file("src/test/resources").absolutePath
+        systemProperty "dockerized", "0"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+// Add jacocoTestReport task after test to generate test coverage report
+test.finalizedBy(jacocoTestReport)
+
+javadoc {
+    options {
+        encoding = 'UTF-8'
+        source = 8
+        links += [
+                'https://docs.oracle.com/javase/8/docs/api/',
+                'https://seleniumhq.github.io/selenium/docs/api/java/',
+                'https://www.javassist.org/html/',
+                'https://commons.apache.org/proper/commons-configuration/apidocs/'
+        ]
+    }
 }
 
 publishing {
