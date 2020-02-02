@@ -1,11 +1,24 @@
 plugins {
     id 'java-library'
+    id 'com.palantir.git-version' version '0.12.2'
     id 'maven-publish'
     id 'jacoco'
 }
 
 group 'io.github.steromano87'
-version '0.1.0'
+
+// Define version from Git tags
+def details = versionDetails()
+def versionString = details.lastTag
+
+if (Integer.parseInt(details.commitDistance.toString()) > 0) {
+    versionString += '+' + details.commitDistance.toString()
+}
+
+if (details.branchName !=~ '(?:.+/)?master') {
+    versionString += '-SNAPSHOT'
+}
+version versionString
 
 sourceCompatibility = 1.8
 
@@ -89,6 +102,8 @@ javadoc {
                 'https://commons.apache.org/proper/commons-configuration/apidocs/'
         ]
     }
+
+    title "Onigiri $versionString API"
 }
 
 publishing {
