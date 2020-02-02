@@ -60,7 +60,7 @@ public abstract class WebPage extends AbstractPage implements Page, Visitable, H
 
         // Get the base URL from properties if the navigation URL starts with a slash
         if (navigationUrl.startsWith("/")) {
-            navigationUrl = Settings.getInstance().getString(Settings.PAGE_BASE_URL) + navigationUrl;
+            navigationUrl = Settings.getInstance().getString(Settings.PAGE_WEB_BASEURL) + navigationUrl;
         }
 
         // Build the final URL adding the page parameters

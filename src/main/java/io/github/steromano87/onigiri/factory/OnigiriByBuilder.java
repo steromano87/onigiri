@@ -35,7 +35,7 @@ public class OnigiriByBuilder extends DefaultElementByBuilder {
         boolean isElementCacheExplicitlyEnabled = annotatedElement.isAnnotationPresent(Cached.class);
         boolean isElementCacheExplicitlyDisabled = annotatedElement.isAnnotationPresent(Uncached.class);
         boolean isElementCacheGloballyEnabled = Settings.getInstance()
-                .getBoolean(Settings.ELEMENT_LOCATORS_CACHE_ENABLED);
+                .getBoolean(Settings.ELEMENT_LOCATOR_CACHED);
 
         if (isElementCacheGloballyEnabled) {
             return !isElementCacheExplicitlyDisabled;
