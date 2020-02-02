@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'com.palantir.git-version' version '0.12.2'
     id 'maven-publish'
+    id 'signing'
     id 'jacoco'
 }
 
@@ -119,8 +120,8 @@ publishing {
 
                 licenses {
                     license {
-                        name = 'GNU General Public License, Version 3'
-                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                        name = 'GNU Lesser General Public License, Version 3'
+                        url = 'https://www.gnu.org/licenses/lgpl-3.0.txt'
                     }
                 }
 
@@ -140,4 +141,19 @@ publishing {
             }
         }
     }
+
+    repositories {
+        maven {
+            name 'GitHubPackages'
+            url 'https://maven.pkg.github.com/steromano87/onigiri'
+            credentials {
+                username = 'steromano87'
+                password = System.getenv('PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.onigiri
 }
