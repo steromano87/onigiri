@@ -128,10 +128,15 @@ public class EnhancersApplier implements MethodHandler {
     }
 
     /**
-     * Retrieves the overridden (or default) priority for a {@link BeforeMethodEnhancer}.
+     * Retrieves the priority for a {@link BeforeMethodEnhancer}.
+     *
+     * The value is retrieved by inspecting the {@link BeforeMethodPriority} annotation.
+     * If this annotation is not present, a default value of 100 is assumed.
      *
      * @param target the enhancer to be scanned
      * @return the enhancer priority
+     *
+     * @see BeforeMethodPriority
      */
     private int getBeforeMethodPriority(AnnotatedElement target) {
         if (target.isAnnotationPresent(BeforeMethodPriority.class)) {
@@ -142,10 +147,15 @@ public class EnhancersApplier implements MethodHandler {
     }
 
     /**
-     * Retrieves the overridden (or default) priority for an {@link AfterMethodEnhancer}.
+     * Retrieves the priority for an {@link AfterMethodEnhancer}.
+     *
+     * The value is retrieved by inspecting the {@link AfterMethodPriority} annotation.
+     * If this annotation is not present, a default value of 100 is assumed.
      *
      * @param target the enhancer to be scanned
      * @return the enhancer priority
+     *
+     * @see AfterMethodPriority
      */
     private int getAfterMethodPriority(AnnotatedElement target) {
         if (target.isAnnotationPresent(AfterMethodPriority.class)) {
