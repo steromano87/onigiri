@@ -6,6 +6,10 @@ plugins {
     id 'jacoco'
 }
 
+////////////////////////////////
+//  Build definition section  //
+////////////////////////////////
+
 group 'io.github.steromano87'
 
 // Define version from Git tags
@@ -66,6 +70,11 @@ dependencies {
     testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
@@ -105,7 +114,16 @@ javadoc {
     }
 
     title "Onigiri $versionString API"
+
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }
+
+
+/////////////////////////////////////
+//  Deployment definition section  //
+/////////////////////////////////////
 
 publishing {
     publications {
@@ -120,7 +138,7 @@ publishing {
 
                 licenses {
                     license {
-                        name = 'Apache License, Version 2'
+                        name = 'The Apache License, Version 2.0'
                         url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
@@ -144,11 +162,14 @@ publishing {
 
     repositories {
         maven {
-            name 'GitHubPackages'
-            url 'https://maven.pkg.github.com/steromano87/onigiri'
+            def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+
+            name 'OSSRH'
+            url project.hasProperty('release') ? releasesRepoUrl : snapshotsRepoUrl
             credentials {
-                username = 'steromano87'
-                password = System.getenv('PASSWORD')
+                username = findProperty('mavenUser')
+                password = findProperty('mavenPassword')
             }
         }
     }
