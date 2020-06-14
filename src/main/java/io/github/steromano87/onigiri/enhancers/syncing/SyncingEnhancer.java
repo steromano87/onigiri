@@ -69,8 +69,8 @@ public class SyncingEnhancer implements BeforeMethodEnhancer {
     }
 
     private boolean isSyncCacheEnabled() {
-        boolean isSyncCacheExplicitlyEnabled = this.getClass().isAnnotationPresent(EnableSyncCache.class);
-        boolean isSyncCacheExplicitlyDisabled = this.getClass().isAnnotationPresent(DisableSyncCache.class);
+        boolean isSyncCacheExplicitlyEnabled = this.getClass().isAnnotationPresent(SyncCacheEnabled.class);
+        boolean isSyncCacheExplicitlyDisabled = this.getClass().isAnnotationPresent(SyncCacheDisabled.class);
         boolean isSyncCacheGloballyEnabled = Settings.getInstance().getBoolean(Settings.SYNC_CACHED);
 
         if (isSyncCacheGloballyEnabled) {
