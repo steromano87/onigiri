@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.Objects;
 
 public class PageBuilder {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public PageBuilder(WebDriver driver) {
         this.driver = driver;

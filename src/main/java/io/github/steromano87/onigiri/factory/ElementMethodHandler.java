@@ -10,8 +10,8 @@ import org.openqa.selenium.WrapsDriver;
 import java.lang.reflect.Method;
 
 public abstract class ElementMethodHandler implements MethodHandler {
-    protected OnigiriElementLocator locator;
-    protected WebDriver driver;
+    protected final OnigiriElementLocator locator;
+    protected final WebDriver driver;
 
     public ElementMethodHandler(OnigiriElementLocator locator, WebDriver driver) {
         this.locator = locator;

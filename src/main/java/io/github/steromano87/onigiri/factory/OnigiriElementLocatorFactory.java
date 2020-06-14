@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class OnigiriElementLocatorFactory implements CacheableElementLocatorFactory {
-    private SearchContext searchContext;
-    private Duration findTimeout;
-    private OnigiriByBuilder builder;
-    private ElementClassSelector selector;
+    private final SearchContext searchContext;
+    private final Duration findTimeout;
+    private final OnigiriByBuilder builder;
+    private final ElementClassSelector selector;
 
     public OnigiriElementLocatorFactory(
             SearchContext context,

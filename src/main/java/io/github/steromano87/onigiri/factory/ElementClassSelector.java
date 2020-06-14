@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ElementClassSelector {
-    private Platform platform;
-    private String automation;
+    private final Platform platform;
+    private final String automation;
 
     public ElementClassSelector(Platform platform, String automation) {
         this.platform = platform;
