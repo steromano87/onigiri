@@ -48,7 +48,6 @@ public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhan
             logger.debug("Stopwatch {} started", this.stopwatchName);
         }
 
-        logger.debug(String.format("Stopwatch %s started", this.stopwatchName));
         this.startTime = Instant.now();
     }
 
