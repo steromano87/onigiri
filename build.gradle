@@ -116,12 +116,12 @@ publishing {
             pom {
                 name = 'Onigiri'
                 description = 'Page Object Model framework for modern websites and native apps'
-                url = ''
+                url = 'https://steromano87.github.io/onigiri/'
 
                 licenses {
                     license {
-                        name = 'GNU Lesser General Public License, Version 3'
-                        url = 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+                        name = 'Apache License, Version 2'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
 
