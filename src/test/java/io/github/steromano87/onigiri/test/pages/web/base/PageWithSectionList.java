@@ -1,4 +1,4 @@
-package io.github.steromano87.onigiri.test.pages;
+package io.github.steromano87.onigiri.test.pages.web.base;
 
 import io.github.steromano87.onigiri.ui.web.PageUrl;
 import io.github.steromano87.onigiri.ui.web.WebSection;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-@PageUrl("/testpages/PageWithSectionList.html")
+@PageUrl("/testpages/base/PageWithSectionList.html")
 public class PageWithSectionList extends WebPage {
     @FindBy(css = ".container")
     private List<PageSection> sections;

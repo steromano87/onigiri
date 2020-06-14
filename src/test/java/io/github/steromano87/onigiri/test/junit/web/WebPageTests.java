@@ -1,9 +1,9 @@
 package io.github.steromano87.onigiri.test.junit.web;
 
-import io.github.steromano87.onigiri.test.pages.PageWithList;
-import io.github.steromano87.onigiri.test.pages.PageWithSection;
-import io.github.steromano87.onigiri.test.pages.PageWithSectionList;
-import io.github.steromano87.onigiri.test.pages.SimplePage;
+import io.github.steromano87.onigiri.test.pages.web.base.PageWithList;
+import io.github.steromano87.onigiri.test.pages.web.base.PageWithSection;
+import io.github.steromano87.onigiri.test.pages.web.base.PageWithSectionList;
+import io.github.steromano87.onigiri.test.pages.web.base.SimplePage;
 import org.junit.jupiter.api.*;
 
 

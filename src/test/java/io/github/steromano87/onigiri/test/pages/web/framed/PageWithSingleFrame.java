@@ -1,29 +1,26 @@
-package io.github.steromano87.onigiri.test.pages;
+package io.github.steromano87.onigiri.test.pages.web.framed;
 
 import io.github.steromano87.onigiri.enhancers.syncing.RequiredForSync;
 import io.github.steromano87.onigiri.enhancers.syncing.Synced;
+import io.github.steromano87.onigiri.ui.web.Framed;
 import io.github.steromano87.onigiri.ui.web.PageUrl;
 import io.github.steromano87.onigiri.ui.web.WebPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-@PageUrl("/testpages/SimplePage.html")
-public class SimplePage extends WebPage {
+@PageUrl("/testpages/framed/PageWithSingleFrame.html")
+public class PageWithSingleFrame extends WebPage {
     @RequiredForSync
     @FindBy(css = "h1")
     private WebElement title;
 
     @FindBy(css = "#main-body")
-    private WebElement mainBody;
+    @Framed(@FindBy(css = "iframe"))
+    private WebElement framedContent;
 
     @Synced
-    public String getTitle() {
-        return this.title.getText();
-    }
-
-    @Synced
-    public String getMainBody() {
-        return this.mainBody.getText();
+    public String getFramedContent() {
+        return this.framedContent.getText();
     }
 }

@@ -1,4 +1,4 @@
-package io.github.steromano87.onigiri.test.pages;
+package io.github.steromano87.onigiri.test.pages.web.framed;
 
 import io.github.steromano87.onigiri.enhancers.syncing.RequiredForSync;
 import io.github.steromano87.onigiri.enhancers.syncing.Synced;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-@PageUrl("/testpages/PageWithDoubleFrame.html")
+@PageUrl("/testpages/framed/PageWithDoubleFrame.html")
 public class PageWithDoubleFrame extends WebPage {
     @RequiredForSync
     @FindBy(css = "h1")

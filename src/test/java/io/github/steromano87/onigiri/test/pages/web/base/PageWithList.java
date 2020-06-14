@@ -1,4 +1,4 @@
-package io.github.steromano87.onigiri.test.pages;
+package io.github.steromano87.onigiri.test.pages.web.base;
 
 import io.github.steromano87.onigiri.enhancers.syncing.RequiredForSync;
 import io.github.steromano87.onigiri.enhancers.syncing.Synced;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-@PageUrl("/testpages/PageWithList.html")
+@PageUrl("/testpages/base/PageWithList.html")
 public class PageWithList extends WebPage {
     @RequiredForSync
     @FindBy(css = "h1")
