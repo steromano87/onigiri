@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@BeforeMethodPriority(2)
+@BeforeMethodPriority(100)
 public class SyncingEnhancer implements BeforeMethodEnhancer {
     private boolean isSynced = false;
     private Map<RequiredForSync, Function<Void, Void>> syncConditions = new TreeMap<>(

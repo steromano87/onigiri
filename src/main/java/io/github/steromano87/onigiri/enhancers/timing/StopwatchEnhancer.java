@@ -15,8 +15,8 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 
-@BeforeMethodPriority(1)
-@AfterMethodPriority(100)
+@BeforeMethodPriority(9999)
+@AfterMethodPriority(9999)
 public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhancer {
     private Instant startTime;
     private String stopwatchName;

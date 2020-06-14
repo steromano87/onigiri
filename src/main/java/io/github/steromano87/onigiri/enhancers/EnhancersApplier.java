@@ -168,10 +168,9 @@ public class EnhancersApplier implements MethodHandler {
             Class<? extends Enhancer> enhancerBaseInterface) {
         List<Enhancer> output = availableEnhancers.stream()
                 .filter(e -> enhancerBaseInterface.isAssignableFrom(e.getClass()))
-                .sorted(Comparator.comparingInt(
-                        e -> enhancerBaseInterface.equals(BeforeMethodEnhancer.class) ?
-                                this.getBeforeMethodPriority(e.getClass()) :
-                                this.getAfterMethodPriority(e.getClass())))
+                .sorted(enhancerBaseInterface.equals(BeforeMethodEnhancer.class) ?
+                            Comparator.comparingInt(e -> this.getBeforeMethodPriority(e.getClass())).reversed() :
+                            Comparator.comparingInt(e -> this.getAfterMethodPriority(e.getClass())))
                 .collect(Collectors.toList());
 
         logger.debug(
