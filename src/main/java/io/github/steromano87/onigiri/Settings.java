@@ -1,7 +1,7 @@
 package io.github.steromano87.onigiri;
 
 import io.github.steromano87.onigiri.enhancers.syncing.Synced;
-import io.github.steromano87.onigiri.enhancers.syncing.SyncingEnhancer;
+import io.github.steromano87.onigiri.enhancers.syncing.SyncEnhancer;
 import io.github.steromano87.onigiri.enhancers.timing.StopwatchEnhancer;
 import io.github.steromano87.onigiri.ui.ExtendedElement;
 import io.github.steromano87.onigiri.ui.web.PageUrl;
@@ -37,7 +37,7 @@ public class Settings {
     /**
      * Whether the sync enhancer is enabled or not in the current project.
      *
-     * @see SyncingEnhancer
+     * @see SyncEnhancer
      */
     public static final String SYNC_ENABLED = "onigiri.sync.enabled";
 

@@ -24,12 +24,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @BeforeMethodPriority(100)
-public class SyncingEnhancer implements BeforeMethodEnhancer {
+public class SyncEnhancer implements BeforeMethodEnhancer {
     private boolean isSynced = false;
     private final Map<RequiredForSync, Function<Void, Void>> syncConditions = new TreeMap<>(
             Comparator.comparingInt(RequiredForSync::priority)
     );
-    private static final Logger logger = LoggerFactory.getLogger(SyncingEnhancer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SyncEnhancer.class);
 
     @Override
     public boolean isApplicableBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
