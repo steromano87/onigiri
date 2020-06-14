@@ -1,8 +1,8 @@
 package io.github.steromano87.onigiri.test.junit.web;
 
-import io.github.steromano87.onigiri.test.pages.PageWithDoubleFrame;
-import io.github.steromano87.onigiri.test.pages.PageWithSingleFrame;
-import io.github.steromano87.onigiri.test.pages.PageWithSingleFrameSectioned;
+import io.github.steromano87.onigiri.test.pages.web.framed.PageWithDoubleFrame;
+import io.github.steromano87.onigiri.test.pages.web.framed.PageWithSingleFrame;
+import io.github.steromano87.onigiri.test.pages.web.framed.PageWithSingleFrameSectioned;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
