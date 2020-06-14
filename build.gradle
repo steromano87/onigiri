@@ -14,14 +14,20 @@ group 'io.github.steromano87'
 
 // Define version from Git tags
 def details = versionDetails()
-def versionString = details.lastTag
+def versionString
 
-if (Integer.parseInt(details.commitDistance.toString()) > 0) {
-    versionString += '+' + details.commitDistance.toString()
-}
+if (project.hasProperty("mavenVersion")) {
+    versionString = project.getProperty("mavenVersion")
+} else {
+    versionString = details.lastTag
 
-if (details.branchName !=~ '(?:.+/)?master') {
-    versionString += '-SNAPSHOT'
+    if (Integer.parseInt(details.commitDistance.toString()) > 0) {
+        versionString += '+' + details.commitDistance.toString()
+    }
+
+    if (details.branchName != ~'(?:.+/)?master') {
+        versionString += '-SNAPSHOT'
+    }
 }
 version versionString
 
