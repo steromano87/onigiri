@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
  * @see MethodHandler
  */
 public class EnhancersApplier implements MethodHandler {
-    private List<Enhancer> beforeMethodEnhancers;
-    private List<Enhancer> afterMethodEnhancers;
+    private final List<Enhancer> beforeMethodEnhancers;
+    private final List<Enhancer> afterMethodEnhancers;
 
     private static final Logger logger = LoggerFactory.getLogger(EnhancersApplier.class);
 

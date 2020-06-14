@@ -15,14 +15,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OnigiriElementLocator implements CacheableLocator {
-    private SearchContext searchContext;
-    private By by;
-    private Duration searchTimeout;
-    private boolean shouldCache;
-    private Class<? extends WebElement> elementType;
+    private final SearchContext searchContext;
+    private final By by;
+    private final Duration searchTimeout;
+    private final boolean shouldCache;
+    private final Class<? extends WebElement> elementType;
     private WebElement cachedElement;
     private List<WebElement> cachedElementList;
-    private By[] framedBys;
+    private final By[] framedBys;
 
 
     public OnigiriElementLocator(

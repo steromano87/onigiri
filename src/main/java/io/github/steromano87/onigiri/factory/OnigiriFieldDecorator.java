@@ -15,11 +15,11 @@ import java.time.Duration;
 import java.util.*;
 
 public class OnigiriFieldDecorator implements FieldDecorator {
-    private WebDriver driver;
-    private Platform platform;
-    private String automation;
-    private ElementLocatorFactory elementLocatorFactory;
-    private ElementClassSelector selector;
+    private final WebDriver driver;
+    private final Platform platform;
+    private final String automation;
+    private final ElementLocatorFactory elementLocatorFactory;
+    private final ElementClassSelector selector;
 
     private static final Set<String> RESERVED_FIELD_NAMES;
 

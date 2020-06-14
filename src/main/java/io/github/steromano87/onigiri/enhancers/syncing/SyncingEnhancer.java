@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 @BeforeMethodPriority(100)
 public class SyncingEnhancer implements BeforeMethodEnhancer {
     private boolean isSynced = false;
-    private Map<RequiredForSync, Function<Void, Void>> syncConditions = new TreeMap<>(
+    private final Map<RequiredForSync, Function<Void, Void>> syncConditions = new TreeMap<>(
             Comparator.comparingInt(RequiredForSync::priority)
     );
-    private static Logger logger = LoggerFactory.getLogger(SyncingEnhancer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SyncingEnhancer.class);
 
     @Override
     public boolean isApplicableBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {

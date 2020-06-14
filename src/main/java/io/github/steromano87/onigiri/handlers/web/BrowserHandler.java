@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class BrowserHandler implements HandlesViewport, HasPlatformInformation {
-    private WebDriver driver;
-    private JavascriptHandler javascriptHandler;
+    private final WebDriver driver;
+    private final JavascriptHandler javascriptHandler;
 
     public BrowserHandler(WebDriver driver) {
         this.driver = driver;

@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class JavascriptHandler implements JavascriptExecutor {
-    private JavascriptExecutor executor;
+    private final JavascriptExecutor executor;
 
     private static final String TRIGGER_EVENT_JS_FUNCTION =
             readFunction("javascript/vanilla/triggerEvent.js");
