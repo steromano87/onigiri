@@ -47,11 +47,9 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
 
         if ((this.isSyncCacheEnabled() && ! this.isSynced) || !this.isSyncCacheEnabled()) {
             logger.info(
-                    String.format(
-                            "Triggering sync for method %s.%s",
-                            Proxies.getUnproxiedClass(target).getName(),
-                            originalMethod.getName()
-                    )
+                    "Triggering sync for method {}.{}",
+                    Proxies.getUnproxiedClass(target).getName(),
+                    originalMethod.getName()
             );
             for (Map.Entry<RequiredForSync, Function<Void, Void>> syncCondition : this.syncConditions.entrySet()) {
                 syncCondition.getValue().apply(null);
@@ -61,8 +59,8 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
 
             // If the target holds the reference of the current tab, locks it, since it has been synced
             if (HoldsTabHandleReference.class.isAssignableFrom(target.getClass())) {
-                logger.debug(String.format("Registering tab handle in %s",
-                        Proxies.getUnproxiedClass(target).getName()));
+                logger.debug("Registering current tab handle in {}",
+                        Proxies.getUnproxiedClass(target).getName());
                 ((HoldsTabHandleReference) target).registerTabHandle();
             }
         }
@@ -98,15 +96,14 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
                 .filter(f -> f.isAnnotationPresent(RequiredForSync.class))
                 .collect(Collectors.toSet());
         logger.debug(
-                String.format(
-                        "%d field sync conditions have been found%s",
-                        syncFields.size(),
-                        syncFields.size() > 0 ?
-                                ": " + syncFields.stream()
-                                        .map(Field::getName)
-                                        .collect(Collectors.joining(", ")) :
-                                ""
-                )
+                "{} field (implicit) sync conditions have been found for class {}{}",
+                syncFields.size(),
+                targetClass.getName(),
+                syncFields.size() > 0 ?
+                        ": " + syncFields.stream()
+                                .map(Field::getName)
+                                .collect(Collectors.joining(", ")) :
+                        ""
         );
 
         String platformName = ((HasCapabilities) target.getWrappedDriver()).getCapabilities().getPlatform().name();
@@ -157,15 +154,14 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
                 .filter(m -> m.isAnnotationPresent(RequiredForSync.class))
                 .collect(Collectors.toSet());
         logger.debug(
-                String.format(
-                        "%d method sync conditions have been found%s",
-                        syncMethods.size(),
-                        syncMethods.size() > 0 ?
-                                ": " + syncMethods.stream()
-                                        .map(Method::getName)
-                                        .collect(Collectors.joining(", ")) :
-                                ""
-                )
+                "{} method (explicit) sync conditions have been found for class {}{}",
+                syncMethods.size(),
+                targetClass.getName(),
+                syncMethods.size() > 0 ?
+                        ": " + syncMethods.stream()
+                                .map(Method::getName)
+                                .collect(Collectors.joining(", ")) :
+                        ""
         );
 
         for (Method syncMethod : syncMethods) {
