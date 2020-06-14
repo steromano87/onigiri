@@ -20,7 +20,7 @@ import java.time.Instant;
 public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhancer {
     private Instant startTime;
     private String stopwatchName;
-    private static Logger logger = LoggerFactory.getLogger(StopwatchEnhancer.class);
+    private static final Logger logger = LoggerFactory.getLogger(StopwatchEnhancer.class);
 
     @Override
     public boolean isApplicableBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
@@ -39,11 +39,13 @@ public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhan
     public void applyBefore(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
         this.stopwatchName = originalMethod.getAnnotation(Stopwatch.class).value();
         if (this.stopwatchName.equals("")) {
-            this.stopwatchName = String.format(
-                    "Method invocation %s.%s()",
+            logger.debug(
+                    "Method invocation {}.{}() started",
                     Proxies.getUnproxiedClass(target),
                     originalMethod.getName()
             );
+        } else {
+            logger.debug("Stopwatch {} started", this.stopwatchName);
         }
 
         logger.debug(String.format("Stopwatch %s started", this.stopwatchName));
@@ -52,13 +54,27 @@ public class StopwatchEnhancer implements BeforeMethodEnhancer, AfterMethodEnhan
 
     @Override
     public void applyAfter(Object target, Method originalMethod, Method overriddenMethod, Object... args) {
-        logger.debug(String.format("%s stopwatch ended", this.stopwatchName));
         Instant endTime = Instant.now();
-
-        this.logStopwatchDuration(stopwatchName, Duration.between(this.startTime, endTime).toMillis());
-    }
-
-    private void logStopwatchDuration(String stopwatchName, long stopwatchDuration) {
-        logger.info(String.format("%s - lasted %d ms", stopwatchName, stopwatchDuration));
+        long stopwatchDuration = Duration.between(this.startTime, endTime).toMillis();
+        if (this.stopwatchName.equals("")) {
+            logger.debug(
+                    "Method invocation {}.{}() ended",
+                    Proxies.getUnproxiedClass(target),
+                    originalMethod.getName()
+            );
+            logger.info(
+                    "Method invocation {}.{}() lasted {} ms",
+                    Proxies.getUnproxiedClass(target),
+                    originalMethod.getName(),
+                    stopwatchDuration
+            );
+        } else {
+            logger.debug("Stopwatch {} ended", this.stopwatchName);
+            logger.info(
+                    "Stopwatch {} lasted {} ms",
+                    this.stopwatchName,
+                    stopwatchDuration
+            );
+        }
     }
 }
