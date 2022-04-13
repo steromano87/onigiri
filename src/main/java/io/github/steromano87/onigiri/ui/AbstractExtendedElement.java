@@ -1,6 +1,9 @@
 package io.github.steromano87.onigiri.ui;
 
+import io.github.steromano87.onigiri.utils.Proxies;
 import org.openqa.selenium.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,27 +16,40 @@ import java.util.List;
  * related subclasses.
  */
 public abstract class AbstractExtendedElement implements ExtendedElement {
+    private final Logger logger;
     // The wrapped element
     private WebElement wrappedElement;
 
+    public AbstractExtendedElement() {
+        this.logger = LoggerFactory.getLogger(Proxies.getUnproxiedClass(this));
+    }
+
     @Override
     public void click() {
+        logger.debug("Clicking on element {}...", this.getWrappedElement());
         this.wrappedElement.click();
+        logger.info("Clicked on element {}", this.getWrappedElement());
     }
 
     @Override
     public void submit() {
+        logger.debug("Submitting form {}...", this.getWrappedElement());
         this.wrappedElement.submit();
+        logger.info("Submitted form {}", this.getWrappedElement());
     }
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
+        logger.debug("Sending keys '{}'...", String.join("", keysToSend));
         this.wrappedElement.sendKeys(keysToSend);
+        logger.info("Sent keys '{}'...", String.join("", keysToSend));
     }
 
     @Override
     public void clear() {
+        logger.debug("Clearing element {}...", this.getWrappedElement());
         this.wrappedElement.clear();
+        logger.debug("Cleared element {}", this.getWrappedElement());
     }
 
     @Override

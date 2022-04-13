@@ -6,10 +6,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
 public abstract class ElementMethodHandler implements MethodHandler {
+    protected static final Logger logger = LoggerFactory.getLogger(ElementMethodHandler.class);
     protected final OnigiriElementLocator locator;
     protected final WebDriver driver;
 
@@ -56,10 +59,14 @@ public abstract class ElementMethodHandler implements MethodHandler {
         for (By by : this.locator.getFramedBys()) {
             WebElement frame = this.driver.findElement(by);
             this.driver.switchTo().frame(frame);
+            logger.info("Entered frame context {}", frame);
         }
     }
 
     private void exitFramedContext() {
         this.driver.switchTo().defaultContent();
+        if (this.locator.getFramedBys().length > 0) {
+            logger.info("Returned to main page context");
+        }
     }
 }
