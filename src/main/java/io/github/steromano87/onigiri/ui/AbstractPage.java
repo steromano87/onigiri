@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 
 
 public abstract class AbstractPage implements Page {
@@ -38,30 +37,30 @@ public abstract class AbstractPage implements Page {
     protected WebDriverWait getWaiter() {
         return this.getWaiter(
                 this.getDefaultSyncTimeout(),
-                Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING)
+                Duration.ofMillis(Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING))
         );
     }
 
-    protected WebDriverWait getWaiter(int waitTimeout) {
+    protected WebDriverWait getWaiter(Duration waitTimeout) {
         return this.getWaiter(
                 waitTimeout,
-                Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING)
+                Duration.ofMillis(Settings.getInstance().getInt(Settings.SYNC_DEFAULT_POLLING))
         );
     }
 
-    protected WebDriverWait getWaiter(int waitTimeout, int pollingInterval) {
+    protected WebDriverWait getWaiter(Duration waitTimeout, Duration pollingInterval) {
         return (WebDriverWait) new WebDriverWait(this.driver, waitTimeout, pollingInterval)
                 .ignoring(StaleElementReferenceException.class);
     }
 
-    private int getDefaultSyncTimeout() {
+    private Duration getDefaultSyncTimeout() {
         if (this.getClass().isAnnotationPresent(SyncTimeout.class)) {
-            return (int) Duration.of(
+            return Duration.of(
                     this.getClass().getAnnotation(SyncTimeout.class).value(),
                     this.getClass().getAnnotation(SyncTimeout.class).unit()
-            ).get(ChronoUnit.SECONDS);
+            );
         } else {
-            return Settings.getInstance().getInt(Settings.SYNC_DEFAULT_TIMEOUT);
+            return Duration.ofMillis(Settings.getInstance().getInt(Settings.SYNC_DEFAULT_TIMEOUT));
         }
     }
 }

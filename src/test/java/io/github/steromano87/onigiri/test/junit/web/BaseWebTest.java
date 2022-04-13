@@ -1,22 +1,30 @@
 package io.github.steromano87.onigiri.test.junit.web;
 
+import io.github.steromano87.onigiri.Settings;
 import io.github.steromano87.onigiri.factory.PageBuilder;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Objects;
 
-
+@Testcontainers
 public abstract class BaseWebTest {
-    protected static BrowserWebDriverContainer<?> container;
+    @Container
+    protected BrowserWebDriverContainer<?> container = new BrowserWebDriverContainer<>()
+            .withCapabilities(new ChromeOptions())
+            .withClasspathResourceMapping(
+                    "testpages/",
+                    "/testpages/",
+                    BindMode.READ_ONLY
+            );
 
     protected WebDriver driver;
     protected PageBuilder builder;
@@ -27,35 +35,12 @@ public abstract class BaseWebTest {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 
-        if (System.getProperty("dockerized").equals("1")) {
-            container = new BrowserWebDriverContainer<>()
-                    .withCapabilities(new ChromeOptions())
-                    .withClasspathResourceMapping(
-                            "testpages/",
-                            "/testpages/",
-                            BindMode.READ_ONLY
-                    );
-            container.start();
-        }
-    }
-
-    @AfterAll
-    static void afterAll() {
-        if (System.getProperty("dockerized").equals("1")) {
-            container.stop();
-        }
+        System.setProperty(Settings.PAGE_WEB_BASEURL, "file://");
     }
 
     @BeforeEach
     void beforeEach() {
-        if (System.getProperty("dockerized").equals("1")) {
-            this.driver = Objects.requireNonNull(container.getWebDriver());
-        } else {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("headless");
-            this.driver = new ChromeDriver(options);
-        }
-
+        this.driver = Objects.requireNonNull(container.getWebDriver());
         this.builder = new PageBuilder(this.driver);
     }
 }
