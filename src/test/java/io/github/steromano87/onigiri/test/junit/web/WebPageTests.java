@@ -20,17 +20,6 @@ class WebPageTests extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("Simple Web Page (forcing usage of ExtendedElement)")
-    void simpleWebPageWithForcedExtendedElementTest() {
-        Settings.getInstance().setProperty(Settings.ELEMENT_FORCE_EXTENDED, true);
-        SimplePage page = this.builder.build(SimplePage.class);
-        page.visit();
-
-        Assertions.assertEquals("Page title", page.getTitle());
-        Assertions.assertEquals("This is the main body", page.getMainBody());
-    }
-
-    @Test
     @DisplayName("Page with list")
     void pageWithListsTest() {
         PageWithList page = this.builder.build(PageWithList.class);
