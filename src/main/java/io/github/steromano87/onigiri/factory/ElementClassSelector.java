@@ -33,6 +33,11 @@ public class ElementClassSelector {
             return this.getElementClassFromList(element);
         }
 
+        // If the desired class is a simple class, return it directly
+        if (ExtendedElement.class.isAssignableFrom(element.getType())) {
+            return (Class<? extends ExtendedElement>) element.getType();
+        }
+
         // If the usage of extended elements has been forced in settings, use them regardless of the declared type
         if (Settings.getInstance().getBoolean(Settings.ELEMENT_FORCE_EXTENDED)) {
             if (Platforms.isMobile(this.platform)) {
@@ -42,13 +47,7 @@ public class ElementClassSelector {
             }
         }
 
-        // If the desired class is a simple class, return it directly
-        if (!ExtendedElement.class.isAssignableFrom(element.getType())) {
-            return RemoteWebElement.class;
-        }
-
-        // TODO: extend the logic of the method determination (instead of relying on the declared class only)
-        return (Class<? extends ExtendedElement>) element.getType();
+        return RemoteWebElement.class;
     }
 
     @SuppressWarnings("unchecked")
