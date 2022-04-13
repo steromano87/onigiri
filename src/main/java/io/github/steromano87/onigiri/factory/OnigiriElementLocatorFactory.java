@@ -30,7 +30,7 @@ public class OnigiriElementLocatorFactory implements CacheableElementLocatorFact
         this.searchContext = context;
         this.findTimeout = findTimeout;
         this.builder = new OnigiriByBuilder(platform.name(), automation);
-        this.selector = new ElementClassSelector(platform, automation);
+        this.selector = new ElementClassSelector();
     }
 
     @Override

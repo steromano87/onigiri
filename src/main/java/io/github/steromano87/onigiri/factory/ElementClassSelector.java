@@ -1,9 +1,9 @@
 package io.github.steromano87.onigiri.factory;
 
-import io.appium.java_client.internal.ElementMap;
 import io.github.steromano87.onigiri.ui.ExtendedElement;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -11,14 +11,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ElementClassSelector {
-    private final Platform platform;
-    private final String automation;
-
-    public ElementClassSelector(Platform platform, String automation) {
-        this.platform = platform;
-        this.automation = automation;
-    }
-
     @SuppressWarnings("unchecked")
     public Class<? extends WebElement> getElementClass(Field element) {
         // If the element is not a WebElement instance, return null
@@ -34,7 +26,7 @@ public class ElementClassSelector {
 
         // If the desired class is a simple class, return it directly
         if (!ExtendedElement.class.isAssignableFrom(element.getType())) {
-            return ElementMap.getElementClass(this.platform.toString(), this.automation);
+            return RemoteWebElement.class;
         }
 
         // TODO: extend the logic of the method determination (instead of relying on the declared class only)
@@ -60,6 +52,6 @@ public class ElementClassSelector {
             return null;
         }
 
-        return ElementMap.getElementClass(this.platform.toString(), this.automation);
+        return RemoteWebElement.class;
     }
 }

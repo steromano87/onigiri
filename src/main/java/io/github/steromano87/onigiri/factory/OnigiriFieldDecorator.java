@@ -30,7 +30,7 @@ public class OnigiriFieldDecorator implements FieldDecorator {
 
     public OnigiriFieldDecorator(SearchContext context) {
         this.driver = WebDriverUnpackUtility.unpackWebDriverFromSearchContext(context);
-        this.platform = ((HasCapabilities) this.driver).getCapabilities().getPlatform();
+        this.platform = ((HasCapabilities) this.driver).getCapabilities().getPlatformName();
         this.automation = Objects.toString(
                 ((HasCapabilities) this.driver).getCapabilities().getCapability("automationName"),
                 ""
@@ -41,7 +41,7 @@ public class OnigiriFieldDecorator implements FieldDecorator {
                 this.platform,
                 this.automation
         );
-        this.selector = new ElementClassSelector(this.platform, this.automation);
+        this.selector = new ElementClassSelector();
     }
 
     @Override
