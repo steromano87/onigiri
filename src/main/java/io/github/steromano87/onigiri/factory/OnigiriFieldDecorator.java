@@ -41,7 +41,7 @@ public class OnigiriFieldDecorator implements FieldDecorator {
                 this.platform,
                 this.automation
         );
-        this.selector = new ElementClassSelector();
+        this.selector = new ElementClassSelector(this.platform);
     }
 
     @Override

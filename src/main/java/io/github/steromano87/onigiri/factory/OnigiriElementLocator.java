@@ -4,6 +4,8 @@ import io.github.steromano87.onigiri.Settings;
 import io.github.steromano87.onigiri.ui.Section;
 import io.appium.java_client.pagefactory.locator.CacheableLocator;
 import io.github.steromano87.onigiri.ui.ExtendedElement;
+import io.github.steromano87.onigiri.ui.web.ExtendedWebElement;
+import io.github.steromano87.onigiri.utils.Platforms;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OnigiriElementLocator implements CacheableLocator {
+    private final Platform platform;
     private final SearchContext searchContext;
     private final By by;
     private final Duration searchTimeout;
@@ -26,12 +29,14 @@ public class OnigiriElementLocator implements CacheableLocator {
 
 
     public OnigiriElementLocator(
+            Platform platform,
             SearchContext searchContext,
             By by,
             boolean shouldCache,
             Duration searchTimeout,
             Class<? extends WebElement> targetType,
             By[] framedBys) {
+        this.platform = platform;
         this.searchContext = searchContext;
         this.by = by;
         this.shouldCache = shouldCache;
@@ -120,14 +125,14 @@ public class OnigiriElementLocator implements CacheableLocator {
     }
 
     private WebElement castToProperElementClass(WebElement rawElement) {
-        WebElement outputElement;
         if (ExtendedElement.class.isAssignableFrom(this.elementType) ||
                 Settings.getInstance().getBoolean(Settings.ELEMENT_FORCE_EXTENDED)) {
             try {
-                outputElement = this.elementType
+                Class<? extends ExtendedElement> safeCastClass = this.getSafeCastTypeFor(this.elementType);
+                ExtendedElement outputElement = safeCastClass
                         .getConstructor()
                         .newInstance();
-                ((ExtendedElement) outputElement).setWrappedElement(rawElement);
+                outputElement.setWrappedElement(rawElement);
 
                 // If the found element is a section, decorate it on the fly
                 if (Section.class.isAssignableFrom(outputElement.getClass())) {
@@ -136,6 +141,8 @@ public class OnigiriElementLocator implements CacheableLocator {
                             outputElement
                     );
                 }
+
+                return outputElement;
 
             } catch (NoSuchMethodException |
                     InstantiationException |
@@ -150,9 +157,20 @@ public class OnigiriElementLocator implements CacheableLocator {
                 );
             }
         } else {
-            outputElement = rawElement;
+            return rawElement;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<? extends ExtendedElement> getSafeCastTypeFor(Class<? extends WebElement> declaredClass) {
+        if (ExtendedElement.class.isAssignableFrom(declaredClass)) {
+            return (Class<? extends ExtendedElement>) declaredClass;
         }
 
-        return outputElement;
+        if (Platforms.isMobile(this.platform)) {
+            throw new UnsupportedOperationException("Mobile part not yet implemented!");
+        } else {
+            return ExtendedWebElement.class;
+        }
     }
 }

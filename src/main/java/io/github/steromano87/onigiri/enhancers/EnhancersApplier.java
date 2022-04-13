@@ -3,7 +3,7 @@ package io.github.steromano87.onigiri.enhancers;
 import io.github.steromano87.onigiri.utils.Proxies;
 import javassist.util.proxy.MethodHandler;
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
@@ -43,7 +43,7 @@ public class EnhancersApplier implements MethodHandler {
         enhancerClasses = new Reflections(
             new ConfigurationBuilder()
                     .setUrls(ClasspathHelper.forClassLoader())
-                    .setScanners(new SubTypesScanner())
+                    .setScanners(Scanners.SubTypes)
         ).getSubTypesOf(Enhancer.class).stream()
                 .filter(e -> !Modifier.isAbstract(e.getModifiers()))
                 .collect(Collectors.toSet());

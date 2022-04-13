@@ -22,6 +22,8 @@ public class OnigiriElementLocatorFactory implements CacheableElementLocatorFact
     private final OnigiriByBuilder builder;
     private final ElementClassSelector selector;
 
+    private final Platform platform;
+
     public OnigiriElementLocatorFactory(
             SearchContext context,
             Duration findTimeout,
@@ -30,7 +32,8 @@ public class OnigiriElementLocatorFactory implements CacheableElementLocatorFact
         this.searchContext = context;
         this.findTimeout = findTimeout;
         this.builder = new OnigiriByBuilder(platform.name(), automation);
-        this.selector = new ElementClassSelector();
+        this.selector = new ElementClassSelector(platform);
+        this.platform = platform;
     }
 
     @Override
@@ -51,6 +54,7 @@ public class OnigiriElementLocatorFactory implements CacheableElementLocatorFact
 
         return Optional.ofNullable(byLocator)
                 .map(by -> new OnigiriElementLocator(
+                        this.platform,
                         this.searchContext,
                         by,
                         builder.isLookupCached(),

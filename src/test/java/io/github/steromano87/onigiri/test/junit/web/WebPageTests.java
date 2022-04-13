@@ -1,5 +1,6 @@
 package io.github.steromano87.onigiri.test.junit.web;
 
+import io.github.steromano87.onigiri.Settings;
 import io.github.steromano87.onigiri.test.pages.web.base.PageWithList;
 import io.github.steromano87.onigiri.test.pages.web.base.PageWithSection;
 import io.github.steromano87.onigiri.test.pages.web.base.PageWithSectionList;
@@ -11,6 +12,17 @@ class WebPageTests extends BaseWebTest {
     @Test
     @DisplayName("Simple Web Page")
     void simpleWebPageTest() {
+        SimplePage page = this.builder.build(SimplePage.class);
+        page.visit();
+
+        Assertions.assertEquals("Page title", page.getTitle());
+        Assertions.assertEquals("This is the main body", page.getMainBody());
+    }
+
+    @Test
+    @DisplayName("Simple Web Page (forcing usage of ExtendedElement)")
+    void simpleWebPageWithForcedExtendedElementTest() {
+        Settings.getInstance().setProperty(Settings.ELEMENT_FORCE_EXTENDED, true);
         SimplePage page = this.builder.build(SimplePage.class);
         page.visit();
 

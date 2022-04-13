@@ -1,6 +1,9 @@
 package io.github.steromano87.onigiri.factory;
 
+import io.github.steromano87.onigiri.Settings;
 import io.github.steromano87.onigiri.ui.ExtendedElement;
+import io.github.steromano87.onigiri.ui.web.ExtendedWebElement;
+import io.github.steromano87.onigiri.utils.Platforms;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -11,6 +14,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ElementClassSelector {
+    private final Platform platform;
+
+    public ElementClassSelector(Platform platform) {
+        this.platform = platform;
+    }
+
     @SuppressWarnings("unchecked")
     public Class<? extends WebElement> getElementClass(Field element) {
         // If the element is not a WebElement instance, return null
@@ -22,6 +31,15 @@ public class ElementClassSelector {
         // type of the list.
         if (List.class.isAssignableFrom(element.getType())) {
             return this.getElementClassFromList(element);
+        }
+
+        // If the usage of extended elements has been forced in settings, use them regardless of the declared type
+        if (Settings.getInstance().getBoolean(Settings.ELEMENT_FORCE_EXTENDED)) {
+            if (Platforms.isMobile(this.platform)) {
+                throw new UnsupportedOperationException("Mobile part not yet implemented!");
+            } else {
+                return ExtendedWebElement.class;
+            }
         }
 
         // If the desired class is a simple class, return it directly
@@ -45,6 +63,15 @@ public class ElementClassSelector {
         // If the inner element is derived from an Extended element, use the inner list class
         if (ExtendedElement.class.isAssignableFrom((Class<?>) listType)) {
             return (Class<? extends ExtendedElement>) listType;
+        }
+
+        // If the usage of extended elements has been forced in settings, use them regardless of the declared type
+        if (Settings.getInstance().getBoolean(Settings.ELEMENT_FORCE_EXTENDED)) {
+            if (Platforms.isMobile(this.platform)) {
+                throw new UnsupportedOperationException("Mobile part not yet implemented!");
+            } else {
+                return ExtendedWebElement.class;
+            }
         }
 
         // If the list parametrized type is not an instance of WebElement, return null

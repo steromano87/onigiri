@@ -5,8 +5,11 @@ import javassist.util.proxy.Proxy;
 import javassist.util.proxy.ProxyFactory;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
 public class Proxies {
+    private Proxies() {}
+
     @SuppressWarnings("unchecked")
     public static <T> T buildProxyInstance(Class<T> baseClass, MethodHandler handler) {
         ProxyFactory factory = new ProxyFactory();
@@ -31,7 +34,7 @@ public class Proxies {
     }
 
     public static Throwable getOriginalException(Throwable throwable) {
-        if (InvocationTargetException.class.isAssignableFrom(throwable.getCause().getClass())) {
+        if (Objects.nonNull(throwable.getCause()) && InvocationTargetException.class.isAssignableFrom(throwable.getCause().getClass())) {
             return getOriginalException(throwable.getCause());
         } else {
             return throwable;

@@ -32,7 +32,7 @@ public class ExtendedWebElement extends AbstractExtendedElement implements Exten
 
     @Override
     public void dragTo(By targetBy) throws NoSuchElementException {
-        this.dragTo((WebElement) this.getWrappedDriver().findElement(targetBy));
+        this.dragTo(this.getWrappedDriver().findElement(targetBy));
     }
 
     @Override
@@ -42,5 +42,10 @@ public class ExtendedWebElement extends AbstractExtendedElement implements Exten
         int yOffset = this.getWrappedElement().getLocation().getY() - targetPoint.getY();
         Actions actions = new Actions(this.getWrappedDriver());
         actions.dragAndDropBy(this.getWrappedElement(), xOffset, yOffset);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ExtendedWebElement (wrapping %s)", this.getWrappedElement());
     }
 }

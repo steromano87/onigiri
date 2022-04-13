@@ -18,7 +18,7 @@ import java.util.Objects;
 @Testcontainers
 public abstract class BaseWebTest {
     @Container
-    protected BrowserWebDriverContainer<?> container = new BrowserWebDriverContainer<>()
+    protected final BrowserWebDriverContainer<?> container = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
             .withClasspathResourceMapping(
                     "testpages/",
