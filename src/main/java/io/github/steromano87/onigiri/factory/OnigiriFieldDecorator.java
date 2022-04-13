@@ -37,7 +37,7 @@ public class OnigiriFieldDecorator implements FieldDecorator {
         );
         this.elementLocatorFactory = new OnigiriElementLocatorFactory(
                 context,
-                Duration.ofSeconds(Settings.getInstance().getInt(Settings.ELEMENT_LOCATOR_TIMEOUT)),
+                Duration.ofMillis(Settings.getInstance().getInt(Settings.ELEMENT_LOCATOR_TIMEOUT)),
                 this.platform,
                 this.automation
         );

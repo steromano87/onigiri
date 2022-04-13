@@ -56,12 +56,12 @@ public class Settings {
     public static final String SYNC_CACHED = "onigiri.sync.cached";
 
     /**
-     * The default timeout for sync.
+     * The default timeout for sync (expressed in milliseconds).
      */
     public static final String SYNC_DEFAULT_TIMEOUT = "onigiri.sync.default.timeout";
 
     /**
-     * The default polling interval between two consecutive page sync evaluations.
+     * The default polling interval between two consecutive page sync evaluations (expressed in milliseconds).
      */
     public static final String SYNC_DEFAULT_POLLING = "onigiri.sync.default.polling";
 
@@ -90,7 +90,7 @@ public class Settings {
     public static final String ELEMENT_LOCATOR_CACHED = "onigiri.element.locator.cached";
 
     /**
-     * Default element locator timeout.
+     * Default element locator timeout (expressed in milliseconds).
      */
     public static final String ELEMENT_LOCATOR_TIMEOUT = "onigiri.element.locator.timeout";
 

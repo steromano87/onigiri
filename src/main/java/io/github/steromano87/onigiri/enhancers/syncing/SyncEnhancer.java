@@ -18,7 +18,6 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -78,14 +77,14 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
         }
     }
 
-    private int getDefaultSyncTimeout(Object target) {
+    private Duration getDefaultSyncTimeout(Object target) {
         if (target.getClass().isAnnotationPresent(SyncTimeout.class)) {
-            return (int) Duration.of(
+            return Duration.of(
                     this.getClass().getAnnotation(SyncTimeout.class).value(),
                     this.getClass().getAnnotation(SyncTimeout.class).unit()
-            ).get(ChronoUnit.SECONDS);
+            );
         } else {
-            return Settings.getInstance().getInt(Settings.SYNC_DEFAULT_TIMEOUT);
+            return Duration.ofMillis(Settings.getInstance().getInt(Settings.SYNC_DEFAULT_TIMEOUT));
         }
     }
 
@@ -106,7 +105,7 @@ public class SyncEnhancer implements BeforeMethodEnhancer {
                         ""
         );
 
-        String platformName = ((HasCapabilities) target.getWrappedDriver()).getCapabilities().getPlatform().name();
+        String platformName = ((HasCapabilities) target.getWrappedDriver()).getCapabilities().getPlatformName().name();
         String automationName = Objects.toString(((HasCapabilities) target.getWrappedDriver()).getCapabilities()
                     .getCapability("automationName"), "");
 
