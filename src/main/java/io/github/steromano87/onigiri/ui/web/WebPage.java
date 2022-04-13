@@ -27,12 +27,12 @@ public abstract class WebPage extends AbstractPage implements Page, Visitable, H
     }
 
     @Override
-    public <T extends WebElement> List<T> findElements(By by) {
+    public List<WebElement> findElements(By by) {
         return this.getWrappedDriver().findElements(by);
     }
 
     @Override
-    public <T extends WebElement> T findElement(By by) {
+    public WebElement findElement(By by) {
         return this.getWrappedDriver().findElement(by);
     }
 

@@ -62,12 +62,12 @@ public abstract class AbstractExtendedElement implements ExtendedElement {
     }
 
     @Override
-    public <T extends WebElement> List<T> findElements(By by) {
+    public List<WebElement> findElements(By by) {
         return this.wrappedElement.findElements(by);
     }
 
     @Override
-    public <T extends WebElement> T findElement(By by) {
+    public WebElement findElement(By by) {
         return this.wrappedElement.findElement(by);
     }
 
